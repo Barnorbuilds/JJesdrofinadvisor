@@ -5,6 +5,8 @@
 - [x] Apply required dependency security fixes.
 - [x] Inspect SaaS architecture, hosted data controls, reports, authentication and Netlify compatibility; prepare the incremental plan for review.
 - [x] Add membership foundation, owner-checked document access, password controls, mobile navigation and safeguarded reset.
+- [x] Review the repeated SaaS brief and prepare a completion plan for all unfinished features.
+- [ ] Implement the completion plan after approval, preserving calculations, dashboard and customer data.
 - [ ] Validate session expiry and membership with a standard sign-in session; managed test tokens have no session identifier and are correctly rejected.
 - [ ] Complete administrator controls after first Super Administrator identity is confirmed.
 - [ ] Complete quotas and translation after administrator-configured entitlements and limits are supplied.
