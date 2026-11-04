@@ -14,6 +14,24 @@ export type Database = {
   }
   public: {
     Tables: {
+      account_controls: {
+        Row: {
+          suspended: boolean
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          suspended?: boolean
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          suspended?: boolean
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       admin_audit: {
         Row: {
           action: string
@@ -234,6 +252,36 @@ export type Database = {
         }
         Relationships: []
       }
+      report_translations: {
+        Row: {
+          created_at: string
+          id: string
+          language: string
+          presentation: Json
+          report_id: string
+          source_version: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          language: string
+          presentation: Json
+          report_id: string
+          source_version: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          language?: string
+          presentation?: Json
+          report_id?: string
+          source_version?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       saved_reports: {
         Row: {
           analysis: Json | null
@@ -397,7 +445,22 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      admin_overview: { Args: never; Returns: Json }
+      admin_save_plan: { Args: { _plan: Json }; Returns: undefined }
+      admin_set_role: {
+        Args: { _role: Database["public"]["Enums"]["app_role"]; _user: string }
+        Returns: undefined
+      }
+      admin_set_suspension: {
+        Args: { _suspended: boolean; _user: string }
+        Returns: undefined
+      }
       configure_security: { Args: { _minutes: number }; Returns: undefined }
+      feature_allowed: { Args: { _feature: string }; Returns: boolean }
+      finish_analysis: {
+        Args: { _analysis: string; _success: boolean }
+        Returns: undefined
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
@@ -405,8 +468,13 @@ export type Database = {
         }
         Returns: boolean
       }
+      reserve_analysis: { Args: { _analysis: string }; Returns: string }
       reset_own_information: { Args: never; Returns: undefined }
       session_active: { Args: never; Returns: boolean }
+      settle_analysis_usage: {
+        Args: { _analysis: string; _success: boolean; _user: string }
+        Returns: undefined
+      }
       touch_session: { Args: never; Returns: boolean }
     }
     Enums: {

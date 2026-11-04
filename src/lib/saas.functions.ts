@@ -27,18 +27,15 @@ export const savePlan = createServerFn({ method: 'POST' })
     id: z.enum(['free', 'professional', 'business']), name: z.string().min(1).max(80),
     price_amount: z.number().nonnegative().nullable(), currency: z.string().length(3).nullable(),
     analysis_limit: z.number().int().nonnegative().nullable(), report_limit: z.number().int().nonnegative().nullable(), company_limit: z.number().int().positive().nullable(),
-    active: z.boolean(),
+    active: z.boolean(), features: z.object({ translation: z.boolean(), pdf: z.boolean(), advanced_reports: z.boolean(), history: z.boolean() }),
   }).parse(d))
   .handler(async ({ context, data }) => {
     const session = await context.supabase.rpc('session_active');
     if (session.error || !session.data) throw new Error('Session expired. Sign in again.');
     const { data: allowed, error } = await context.supabase.rpc('has_role', { _user_id: context.userId, _role: 'super_admin' });
     if (error || !allowed) throw new Error('Only a Super Administrator can configure plans.');
-    const { supabaseAdmin } = await import('@/integrations/supabase/client.server');
-    const result = await supabaseAdmin.from('subscription_plans').upsert({ ...data, currency: data.currency?.toUpperCase() ?? null, updated_at: new Date().toISOString() });
+    const result = await context.supabase.rpc('admin_save_plan', { _plan: { ...data, currency: data.currency?.toUpperCase() ?? null } });
     if (result.error) throw new Error(result.error.message);
-    const audit = await supabaseAdmin.from('admin_audit').insert({ actor_id: context.userId, action: 'configure_plan', target_id: data.id });
-    if (audit.error) throw new Error('Plan saved, but audit logging failed.');
     return { ok: true };
   });
 
