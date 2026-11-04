@@ -15,6 +15,13 @@
       "when": 1792786957396,
       "tag": "0001_session_protection_and_saved_reports",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1793813605756,
+      "tag": "0002_admin_usage_translation_controls",
+      "breakpoints": true
     }
   ]
 }
