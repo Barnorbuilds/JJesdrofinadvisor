@@ -446,6 +446,7 @@ export type Database = {
     }
     Functions: {
       admin_overview: { Args: never; Returns: Json }
+      admin_save_plan: { Args: { _plan: Json }; Returns: undefined }
       admin_set_role: {
         Args: { _role: Database["public"]["Enums"]["app_role"]; _user: string }
         Returns: undefined
@@ -470,6 +471,10 @@ export type Database = {
       reserve_analysis: { Args: { _analysis: string }; Returns: string }
       reset_own_information: { Args: never; Returns: undefined }
       session_active: { Args: never; Returns: boolean }
+      settle_analysis_usage: {
+        Args: { _analysis: string; _success: boolean; _user: string }
+        Returns: undefined
+      }
       touch_session: { Args: never; Returns: boolean }
     }
     Enums: {

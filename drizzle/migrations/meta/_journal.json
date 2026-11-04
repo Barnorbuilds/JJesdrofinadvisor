@@ -22,6 +22,13 @@
       "when": 1793813605756,
       "tag": "0002_admin_usage_translation_controls",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1793813659207,
+      "tag": "0003_trusted_usage_completion_and_plan_audit",
+      "breakpoints": true
     }
   ]
 }
